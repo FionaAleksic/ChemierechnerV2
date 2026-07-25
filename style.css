@@ -1,0 +1,793 @@
+/* ==========================================================
+   FiveM Chemie Rechner
+   Version 3.0
+========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --bg:#0d1117;
+    --card:#161b22;
+    --card2:#1f2937;
+
+    --blue:#3b82f6;
+    --green:#22c55e;
+    --yellow:#facc15;
+    --red:#ef4444;
+
+    --text:#ffffff;
+    --text2:#b7c0cc;
+
+    --radius:18px;
+
+}
+
+body{
+
+    background:linear-gradient(135deg,#0d1117,#1b2533);
+
+    color:var(--text);
+
+    font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+    min-height:100vh;
+
+}
+
+
+/* Hintergrund */
+
+.background{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    radial-gradient(circle at top right,#2563eb33,transparent 35%),
+    radial-gradient(circle at bottom left,#2563eb22,transparent 35%);
+
+    z-index:-1;
+
+}
+
+
+/* Hauptcontainer */
+
+.container{
+
+    width:1400px;
+
+    max-width:95%;
+
+    margin:auto;
+
+    padding:40px;
+
+}
+
+
+/* Header */
+
+header{
+
+    text-align:center;
+
+    margin-bottom:35px;
+
+}
+
+header h1{
+
+    font-size:42px;
+
+    margin-bottom:10px;
+
+}
+
+header p{
+
+    color:var(--text2);
+
+    font-size:18px;
+
+}
+
+
+/* Grid */
+
+.mainGrid{
+
+    display:grid;
+
+    grid-template-columns:420px 1fr;
+
+    gap:25px;
+
+    margin-bottom:25px;
+
+}
+
+
+/* Karten */
+
+.card{
+
+    background:rgba(22,27,34,.88);
+
+    backdrop-filter:blur(12px);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:var(--radius);
+
+    padding:28px;
+
+    margin-bottom:25px;
+
+    box-shadow:
+
+    0 12px 40px rgba(0,0,0,.35);
+
+    transition:.25s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.card h2{
+
+    margin-bottom:22px;
+
+}
+
+
+/* Labels */
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#d9e2ec;
+
+}
+
+
+/* Inputs */
+
+input,
+select{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:20px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:12px;
+
+    background:#2b3647;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+input:focus,
+select:focus{
+
+    outline:2px solid var(--blue);
+
+}
+
+
+/* Button */
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--blue);
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    background:#2563eb;
+
+}
+
+
+/* Statistik */
+
+.statsGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:18px;
+
+}
+
+.stat{
+
+    background:#202b39;
+
+    border-radius:15px;
+
+    padding:22px;
+
+    text-align:center;
+
+}
+
+.stat span{
+
+    font-size:34px;
+
+}
+
+.stat h3{
+
+    font-size:34px;
+
+    margin:10px 0;
+
+    color:var(--blue);
+
+}
+
+.stat p{
+
+    color:var(--text2);
+
+}
+
+.statCost h3{
+
+    color:var(--green);
+
+}
+
+.statRevenue h3{
+
+    color:var(--yellow);
+
+}
+
+.statProfit h3.positive,
+.compareProfit.positive,
+#compareProfit.positive{
+
+    color:var(--green);
+
+}
+
+.statProfit h3.negative,
+.compareProfit.negative,
+#compareProfit.negative,
+#statProfit.negative{
+
+    color:var(--red);
+
+}
+
+.profitCompare{
+
+    margin-top:22px;
+
+    padding:18px 20px;
+
+    background:#202b39;
+
+    border-radius:15px;
+
+    border:1px solid rgba(255,255,255,.06);
+
+}
+
+.profitRow{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:10px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+    color:var(--text2);
+
+}
+
+.profitRow strong{
+
+    color:var(--text);
+
+    font-size:18px;
+
+}
+
+.profitRowTotal{
+
+    border-bottom:none;
+
+    padding-top:14px;
+
+    font-weight:600;
+
+    color:var(--text);
+
+}
+
+.profitRowTotal strong{
+
+    font-size:22px;
+
+}
+
+.profitHint{
+
+    margin-top:14px;
+
+    font-size:13px;
+
+    color:var(--text2);
+
+    text-align:center;
+
+}
+
+.profitCompare.hasProfit .profitHint{
+
+    margin-top:10px;
+
+}
+
+
+/* Tabellen */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+thead{
+
+    background:#2d6cdf;
+
+}
+
+thead th{
+
+    padding:16px;
+
+}
+
+tbody td{
+
+    padding:14px;
+
+    border-bottom:1px solid #2d3748;
+
+}
+
+tbody tr:hover{
+
+    background:#202938;
+
+}
+
+
+/* Platzhalter */
+
+.placeholder{
+
+    padding:35px;
+
+    border-radius:15px;
+
+    border:2px dashed #4b5563;
+
+    text-align:center;
+
+    color:var(--text2);
+
+}
+
+.placeholder h3{
+
+    margin-bottom:15px;
+
+}
+
+
+/* Coming Soon */
+
+.cardHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.coming,
+.badge{
+
+    background:#facc15;
+
+    color:black;
+
+    font-weight:bold;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+}
+
+.badge{
+
+    background:#3b82f6;
+
+    color:white;
+
+}
+
+.placeholderText{
+
+    color:var(--text2);
+
+    text-align:center;
+
+    padding:20px;
+
+}
+
+.treeContainer{
+
+    min-height:60px;
+
+}
+
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#0d1117;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#3b82f6;
+
+    border-radius:10px;
+
+}
+
+
+/* Animation */
+
+.card{
+
+    animation:fade .5s ease;
+
+}
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* Responsive */
+
+@media(max-width:1100px){
+
+.mainGrid{
+
+grid-template-columns:1fr;
+
+}
+
+.statsGrid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:700px){
+
+.container{
+
+padding:15px;
+
+}
+
+.statsGrid{
+
+grid-template-columns:1fr;
+
+}
+
+header h1{
+
+font-size:30px;
+
+}
+
+.card{
+
+padding:18px;
+
+}
+
+}
+
+/* ==========================================
+   Produktionsbaum
+========================================== */
+
+#productionTree ul{
+
+    list-style:none;
+
+    margin-left:25px;
+
+    padding-left:20px;
+
+    border-left:2px solid #3b82f6;
+
+}
+
+#productionTree li{
+
+    margin:8px 0;
+
+    position:relative;
+
+}
+
+#productionTree li::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-20px;
+
+    top:12px;
+
+    width:14px;
+
+    border-top:2px solid #3b82f6;
+
+}
+
+.node{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.toggle{
+
+    cursor:pointer;
+
+    color:#60a5fa;
+
+    width:18px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+
+.copyButton{
+
+    margin-top:20px;
+
+    width:auto;
+
+    padding:12px 20px;
+
+}
+
+.summaryGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:15px;
+
+    margin-top:25px;
+
+}
+
+.summaryCard{
+
+    background:#1e293b;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    text-align:center;
+
+}
+
+.summaryCard h3{
+
+    color:#60a5fa;
+
+    margin-bottom:8px;
+
+}
+.treeNode{
+
+    margin:10px 0;
+
+}
+
+.treeTitle{
+
+    padding:8px 14px;
+
+    background:#263242;
+
+    border-radius:10px;
+
+    display:inline-block;
+
+    margin-bottom:8px;
+
+}
+
+
+/* Materialkosten */
+
+.costCard{
+
+    border-color:rgba(34,197,94,.25);
+
+}
+
+.costCard:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.costBadge{
+
+    background:var(--green);
+
+    font-size:18px;
+
+    padding:8px 16px;
+
+}
+
+.costHint{
+
+    color:var(--text2);
+
+    margin:-8px 0 20px;
+
+    font-size:14px;
+
+}
+
+#costTable td:last-child,
+#costTable th:last-child{
+
+    text-align:right;
+
+    font-weight:600;
+
+    color:var(--green);
+
+}
+
+#costTable td:nth-child(3){
+
+    text-align:right;
+
+    color:var(--text2);
+
+}
+
+#costTable td:nth-child(2){
+
+    text-align:center;
+
+}

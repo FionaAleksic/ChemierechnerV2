@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FiveM Chemie Rechner</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="background"></div>
+
+    <div class="container">
+
+        <header>
+
+            <h1>🧪 FiveM Chemie Rechner</h1>
+
+            <p>Chemie Berechnung • XP-Liste • Preise</p>
+
+        </header>
+
+        <div class="mainGrid">
+
+            <section class="card">
+
+                <h2>Herstellung</h2>
+
+                <label for="search">Suche</label>
+
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Chemikalie suchen...">
+
+                <label for="recipeSelect">Chemikalie</label>
+
+                <select id="recipeSelect"></select>
+
+                <label for="amount">Anzahl Endprodukte</label>
+
+                <input
+                    type="number"
+                    id="amount"
+                    min="1"
+                    value="3"
+                    step="1">
+
+                <label for="sellPrice">Verkaufspreis pro Stück ($)</label>
+
+                <input
+                    type="number"
+                    id="sellPrice"
+                    min="0"
+                    placeholder="Optional — für Gewinnberechnung"
+                    step="1">
+
+            </section>
+
+            <section class="card">
+
+                <h2>Ergebnis</h2>
+
+                <div class="statsGrid">
+
+                    <div class="stat">
+
+                        <span>Output</span>
+
+                        <h3 id="outputAmount">0</h3>
+
+                        <p>Endprodukte</p>
+
+                    </div>
+
+                    <div class="stat">
+
+                        <span>🧪</span>
+
+                        <h3 id="glassCount">0</h3>
+
+                        <p>Durchläufe</p>
+
+                    </div>
+
+                    <div class="stat">
+
+                        <span>⭐</span>
+
+                        <h3 id="xpAmount">0</h3>
+
+                        <p>XP</p>
+
+                    </div>
+
+                    <div class="stat">
+
+                        <span>⏱</span>
+
+                        <h3 id="timeAmount">0 s</h3>
+
+                        <p>Zeit</p>
+
+                    </div>
+
+                    <div class="stat statCost">
+
+                        <span>💰</span>
+
+                        <h3 id="statMaterialCost">$0</h3>
+
+                        <p>Materialkosten</p>
+
+                    </div>
+
+                    <div class="stat statRevenue">
+
+                        <span>📈</span>
+
+                        <h3 id="statRevenue">—</h3>
+
+                        <p>Erlös</p>
+
+                    </div>
+
+                    <div class="stat statProfit">
+
+                        <span>💵</span>
+
+                        <h3 id="statProfit">—</h3>
+
+                        <p>Gewinn</p>
+
+                    </div>
+
+                </div>
+
+                <div class="profitCompare" id="profitCompare">
+
+                    <div class="profitRow">
+
+                        <span>Einkauf (Material)</span>
+
+                        <strong id="compareCost">$0</strong>
+
+                    </div>
+
+                    <div class="profitRow">
+
+                        <span>Verkauf (Erlös)</span>
+
+                        <strong id="compareRevenue">—</strong>
+
+                    </div>
+
+                    <div class="profitRow profitRowTotal">
+
+                        <span>Gewinn</span>
+
+                        <strong id="compareProfit">—</strong>
+
+                    </div>
+
+                    <p class="profitHint" id="profitHint">Verkaufspreis eingeben, um Gewinn und Marge zu sehen.</p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+        <section class="card costCard">
+
+            <div class="cardHeader">
+
+                <h2>💰 Materialkosten</h2>
+
+                <span class="badge costBadge" id="totalCost">$0</span>
+
+            </div>
+
+            <p class="costHint">Gesamtkosten für alle benötigten Rohstoffe</p>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Material</th>
+                        <th>Menge</th>
+                        <th>Einzelpreis</th>
+                        <th>Summe</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="costTable">
+
+                    <tr>
+
+                        <td colspan="4">Keine Berechnung durchgeführt.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Benötigte Zutaten</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Zutat</th>
+                        <th>Menge</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="ingredientTable">
+
+                    <tr>
+
+                        <td colspan="2">Keine Berechnung durchgeführt.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <section class="card">
+
+            <div class="cardHeader">
+
+                <h2>Produktionsbaum</h2>
+
+            </div>
+
+            <div id="productionTree" class="treeContainer">
+
+                <p class="placeholderText">Keine Berechnung durchgeführt.</p>
+
+            </div>
+
+            <button class="copyButton" id="copyList" type="button">
+
+                📋 Produktionsliste kopieren
+
+            </button>
+
+        </section>
+
+        <section class="card">
+
+            <h2>📦 Rohstoffe</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Rohstoff</th>
+                        <th>Menge</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="rawMaterialTable">
+
+                    <tr>
+
+                        <td colspan="2">Keine Berechnung durchgeführt.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <section class="card">
+
+            <div class="cardHeader">
+
+                <h2>Rezeptdatenbank</h2>
+
+                <span class="badge" id="recipeCount">0 Rezepte</span>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Level</th>
+                        <th>XP</th>
+                        <th>Zeit</th>
+                        <th>Qualität</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="recipeDatabaseTable"></tbody>
+
+            </table>
+
+        </section>
+
+    </div>
+
+    <script src="recipes.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
