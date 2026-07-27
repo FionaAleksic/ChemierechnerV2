@@ -111,14 +111,6 @@ export function renderResult(result, recipeIndex, rawMaterials, currencySymbol) 
   setText('stageXp', stage.xp.toLocaleString('de-DE'));
   setText('totalXp', totalXp.toLocaleString('de-DE'));
   setText('materialCost', formatPrice(costs.total, currencySymbol));
-
-  /*setText(
-    'batchExplanation',
-    `Ein Prozess fasst bis zu ${stage.craftsPerProcess} Herstellungen. ` +
-      `${stage.craftCount} Herstellungen benötigen daher ${stage.processCount} Prozess(e) ` +
-      `zu je ${formatTime(stage.secondsPerProcess)}.`,
-  );*/
-
   setText(
     'outputExplanation',
     `${stage.craftCount} × ${stage.outputPerCraft} Stück = ${stage.normalizedAmount} Endprodukte`,
