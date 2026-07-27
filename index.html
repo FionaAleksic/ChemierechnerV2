@@ -1,342 +1,187 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>FiveM Chemie Rechner</title>
-
-    <link rel="stylesheet" href="style.css">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description">
+  <title>Chemie-Rechner</title>
 </head>
 
 <body>
-
-    <div class="background"></div>
-
-    <div class="container">
-
-        <header>
-
-            <h1>🧪 FiveM Chemie Rechner</h1>
-
-            <p>Chemie Berechnung • XP-Liste • Preise</p>
-
-        </header>
-
-        <div class="mainGrid">
-
-            <section class="card">
-
-                <h2>Herstellung</h2>
-
-                <label for="search">Suche</label>
-
-                <input
-                    type="text"
-                    id="search"
-                    placeholder="Chemikalie suchen...">
-
-                <label for="recipeSelect">Chemikalie</label>
-
-                <select id="recipeSelect"></select>
-
-                <label for="amount">Anzahl Endprodukte</label>
-
-                <input
-                    type="number"
-                    id="amount"
-                    min="1"
-                    value="3"
-                    step="1">
-
-                <label for="sellPrice">Verkaufspreis pro Stück ($)</label>
-
-                <input
-                    type="number"
-                    id="sellPrice"
-                    min="0"
-                    placeholder="Optional — für Gewinnberechnung"
-                    step="1">
-
-            </section>
-
-            <section class="card">
-
-                <h2>Ergebnis</h2>
-
-                <div class="statsGrid">
-
-                    <div class="stat">
-
-                        <span>Output</span>
-
-                        <h3 id="outputAmount">0</h3>
-
-                        <p>Endprodukte</p>
-
-                    </div>
-
-                    <div class="stat">
-
-                        <span>🧪</span>
-
-                        <h3 id="glassCount">0</h3>
-
-                        <p>Durchläufe</p>
-
-                    </div>
-
-                    <div class="stat">
-
-                        <span>⭐</span>
-
-                        <h3 id="xpAmount">0</h3>
-
-                        <p>XP</p>
-
-                    </div>
-
-                    <div class="stat">
-
-                        <span>⏱</span>
-
-                        <h3 id="timeAmount">0 s</h3>
-
-                        <p>Zeit</p>
-
-                    </div>
-
-                    <div class="stat statCost">
-
-                        <span>💰</span>
-
-                        <h3 id="statMaterialCost">$0</h3>
-
-                        <p>Materialkosten</p>
-
-                    </div>
-
-                    <div class="stat statRevenue">
-
-                        <span>📈</span>
-
-                        <h3 id="statRevenue">—</h3>
-
-                        <p>Erlös</p>
-
-                    </div>
-
-                    <div class="stat statProfit">
-
-                        <span>💵</span>
-
-                        <h3 id="statProfit">—</h3>
-
-                        <p>Gewinn</p>
-
-                    </div>
-
-                </div>
-
-                <div class="profitCompare" id="profitCompare">
-
-                    <div class="profitRow">
-
-                        <span>Einkauf (Material)</span>
-
-                        <strong id="compareCost">$0</strong>
-
-                    </div>
-
-                    <div class="profitRow">
-
-                        <span>Verkauf (Erlös)</span>
-
-                        <strong id="compareRevenue">—</strong>
-
-                    </div>
-
-                    <div class="profitRow profitRowTotal">
-
-                        <span>Gewinn</span>
-
-                        <strong id="compareProfit">—</strong>
-
-                    </div>
-
-                    <p class="profitHint" id="profitHint">Verkaufspreis eingeben, um Gewinn und Marge zu sehen.</p>
-
-                </div>
-
-            </section>
-
+  <header class="site-header">
+    <div>
+      <h1>Chemie-Rechner</h1>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="controls panel" aria-labelledby="controlsTitle">
+      <div class="panel-heading">
+        <h2 id="controlsTitle">Berechnung</h2>
+      </div>
+
+      <label for="search">Produkt suchen</label>
+      <input id="search" type="search" placeholder="Name eingeben" autocomplete="off">
+
+      <label for="recipeSelect">Produkt</label>
+      <select id="recipeSelect"></select>
+
+      <label for="amount">Gewünschte Endprodukte</label>
+      <input id="amount" type="number" min="1" step="1" value="3" inputmode="numeric">
+
+      <label for="sellPrice">Verkaufspreis pro Stück</label>
+      <input id="sellPrice" type="number" min="0" step="1" placeholder="optional" inputmode="numeric">
+
+      <button id="copyButton" type="button">Produktionsliste kopieren</button>
+      <p id="copyStatus" class="status" role="status" aria-live="polite"></p>
+    </aside>
+
+    <div class="content-column">
+      <section class="panel result-panel" aria-labelledby="resultTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Auswertung</p>
+            <h2 id="resultTitle"><span id="resultProduct">Produkt</span></h2>
+          </div>
+          <span class="panel-code"></span>
         </div>
 
-        <section class="card costCard">
-
-            <div class="cardHeader">
-
-                <h2>💰 Materialkosten</h2>
-
-                <span class="badge costBadge" id="totalCost">$0</span>
-
-            </div>
-
-            <p class="costHint">Gesamtkosten für alle benötigten Rohstoffe</p>
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>Material</th>
-                        <th>Menge</th>
-                        <th>Einzelpreis</th>
-                        <th>Summe</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="costTable">
-
-                    <tr>
-
-                        <td colspan="4">Keine Berechnung durchgeführt.</td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-        <section class="card">
-
-            <h2>Benötigte Zutaten</h2>
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>Zutat</th>
-                        <th>Menge</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="ingredientTable">
-
-                    <tr>
-
-                        <td colspan="2">Keine Berechnung durchgeführt.</td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-        <section class="card">
-
-            <div class="cardHeader">
-
-                <h2>Produktionsbaum</h2>
-
-            </div>
-
-            <div id="productionTree" class="treeContainer">
-
-                <p class="placeholderText">Keine Berechnung durchgeführt.</p>
-
-            </div>
-
-            <button class="copyButton" id="copyList" type="button">
-
-                📋 Produktionsliste kopieren
-
-            </button>
-
-        </section>
-
-        <section class="card">
-
-            <h2>📦 Rohstoffe</h2>
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>Rohstoff</th>
-                        <th>Menge</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="rawMaterialTable">
-
-                    <tr>
-
-                        <td colspan="2">Keine Berechnung durchgeführt.</td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-        <section class="card">
-
-            <div class="cardHeader">
-
-                <h2>Rezeptdatenbank</h2>
-
-                <span class="badge" id="recipeCount">0 Rezepte</span>
-
-            </div>
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>Name</th>
-                        <th>Level</th>
-                        <th>XP</th>
-                        <th>Zeit</th>
-                        <th>Qualität</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="recipeDatabaseTable"></tbody>
-
-            </table>
-
-        </section>
-
+        <div class="result-grid">
+          <div class="result-item result-item--wide">
+            <span class="result-label">Endprodukte</span>
+            <strong id="outputAmount">0</strong>
+            <small id="outputExplanation"></small>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Herstellungen</span>
+            <strong id="craftCount">0</strong>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Prozesse</span>
+            <strong id="processCount">0</strong>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Zeit Endprodukt</span>
+            <strong id="stageTime">0 s</strong>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Zeit aller Stufen</span>
+            <strong id="totalTime">0 s</strong>
+          </div>
+          <div class="result-item">
+            <span class="result-label">XP Endprodukt</span>
+            <strong id="stageXp">0</strong>
+          </div>
+          <div class="result-item">
+            <span class="result-label">XP aller Stufen</span>
+            <strong id="totalXp">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="costTitle">
+        <div class="panel-heading">
+          <h2 id="costTitle">Kosten und Verkauf</h2>
+          <span class="panel-code"></span>
+        </div>
+
+        <dl class="finance-list">
+          <div>
+            <dt>Materialkosten</dt>
+            <dd id="materialCost">$0</dd>
+          </div>
+          <div>
+            <dt>Erlös</dt>
+            <dd id="revenue">-</dd>
+          </div>
+          <div>
+            <dt>Gewinn</dt>
+            <dd id="profit">-</dd>
+          </div>
+          <div>
+            <dt>Marge</dt>
+            <dd id="margin">-</dd>
+          </div>
+        </dl>
+      </section>
     </div>
 
-    <script src="recipes.js"></script>
-    <script src="script.js"></script>
+    <section class="panel full-width" aria-labelledby="ingredientsTitle">
+      <div class="panel-heading">
+        <h2 id="ingredientsTitle">Direkte Zutaten</h2>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Zutat</th>
+              <th class="numeric-heading">Pro Herstellung</th>
+              <th class="numeric-heading">Gesamt</th>
+            </tr>
+          </thead>
+          <tbody id="directIngredientsTable"></tbody>
+        </table>
+      </div>
+    </section>
 
+    <section class="panel full-width" aria-labelledby="rawTitle">
+      <div class="panel-heading">
+        <h2 id="rawTitle">Rohstoffe und Materialkosten</h2>
+      </div>
+      <p id="priceWarning" class="warning" hidden>Mindestens ein Rohstoff hat keinen eingetragenen Preis. Die
+        Gesamtkosten sind daher unvollständig.</p>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Rohstoff</th>
+              <th class="numeric-heading">Menge</th>
+              <th class="numeric-heading">Einzelpreis</th>
+              <th class="numeric-heading">Summe</th>
+            </tr>
+          </thead>
+          <tbody id="rawMaterialsTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel full-width" aria-labelledby="treeTitle">
+      <div class="panel-heading">
+        <h2 id="treeTitle">Produktionsweg</h2>
+      </div>
+      <ul id="productionTree" class="production-tree"></ul>
+    </section>
+
+    <details class="panel full-width database-panel">
+      <summary>
+        <span>Rezeptdatenbank</span>
+        <span id="recipeCount">0 Rezepte</span>
+      </summary>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Produkt</th>
+              <th>Output/Craft</th>
+              <th>Crafts/Prozess</th>
+              <th>Zeit/Prozess</th>
+              <th>XP/Craft</th>
+              <th>Level</th>
+              <th>Qualität</th>
+            </tr>
+          </thead>
+          <tbody id="recipeDatabaseTable"></tbody>
+        </table>
+      </div>
+    </details>
+  </main>
+
+  <footer>
+    <!-- Hier kannst du irgendwas reinschreiben Kai, ein icon oder so. -->
+  </footer>
+
+  <script type="module" src="./assets/js/app.js"></script>
 </body>
 
 </html>
