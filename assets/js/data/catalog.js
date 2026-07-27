@@ -1,0 +1,340 @@
+// Zentrale Datenquelle. Für neue Produkte normalerweise nur diese Datei ändern.
+
+export const rawMaterials = {
+  "aceton": { name: "Aceton", price: 3000 },
+  "adrenalin": { name: "Adrenalin", price: 5000 },
+  "ammoniak": { name: "Ammoniak", price: 1500 },
+  "destilliertes-wasser": { name: "Destilliertes Wasser", price: 500 },
+  "diethylether": { name: "Diethylether", price: 4500 },
+  "essigsaeure": { name: "Essigsäure", price: 2000 },
+  "ethanol": { name: "Ethanol", price: 1500 },
+  "kaliumcyanid": { name: "Kaliumcyanid", price: null },
+  "kodein": { name: "Kodein", price: null },
+  "methanol": { name: "Methanol", price: 2000 },
+  "morpium": { name: "Morpium", price: null },
+  "natriumbicarbonat": { name: "Natriumbicarbonat", price: 1500 },
+  "natriumchlorid": { name: "Natriumchlorid", price: 1000 },
+  "natriumhydroxid": { name: "Natriumhydroxid", price: 2500 },
+  "salzsaeure": { name: "Salzsäure", price: 2500 },
+  "schwefelsaeure": { name: "Schwefelsäure", price: 3000 },
+};
+
+export const recipes = [
+  {
+    id: "kochsalzloesung",
+    name: "Kochsalzlösung",
+    level: 0,
+    quality: false,
+    xpPerCraft: 12,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 8,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "natriumchlorid", amountPerCraft: 1 },
+      { itemId: "destilliertes-wasser", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "sterilisationsmittel",
+    name: "Sterilisationsmittel",
+    level: 0,
+    quality: false,
+    xpPerCraft: 15,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 10,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "ethanol", amountPerCraft: 1 },
+      { itemId: "essigsaeure", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "pufferloesung",
+    name: "Pufferlösung",
+    level: 0,
+    quality: false,
+    xpPerCraft: 18,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 12,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "natriumbicarbonat", amountPerCraft: 1 },
+      { itemId: "essigsaeure", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "anaesthetikum",
+    name: "Anästhetikum",
+    level: 0,
+    quality: false,
+    xpPerCraft: 20,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 14,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "diethylether", amountPerCraft: 1 },
+      { itemId: "aceton", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "chloroform",
+    name: "Chloroform",
+    level: 0,
+    quality: false,
+    xpPerCraft: 22,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 15,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "aceton", amountPerCraft: 1 },
+      { itemId: "natriumhydroxid", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "adrenalin-spritze",
+    name: "Adrenalin Spritze",
+    level: 0,
+    quality: false,
+    xpPerCraft: 25,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 15,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "adrenalin", amountPerCraft: 1 },
+      { itemId: "kochsalzloesung", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "antibiotikum",
+    name: "Antibiotikum",
+    level: 0,
+    quality: false,
+    xpPerCraft: 22,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 16,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "pufferloesung", amountPerCraft: 1 },
+      { itemId: "sterilisationsmittel", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "schmerzmittel",
+    name: "Schmerzmittel",
+    level: 2,
+    quality: false,
+    xpPerCraft: 35,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 18,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "kodein", amountPerCraft: 1 },
+      { itemId: "sterilisationsmittel", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "veredelungsmittel",
+    name: "Veredelungsmittel",
+    level: 3,
+    quality: true,
+    xpPerCraft: 45,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 25,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "ammoniak", amountPerCraft: 1 },
+      { itemId: "ethanol", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "medizinische-base",
+    name: "Medizinische Base",
+    level: 4,
+    quality: false,
+    xpPerCraft: 42,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 20,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "kodein", amountPerCraft: 1 },
+      { itemId: "pufferloesung", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "alkaloidextrakt",
+    name: "Alkaloidextrakt",
+    level: 5,
+    quality: false,
+    xpPerCraft: 50,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 22,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "morpium", amountPerCraft: 1 },
+      { itemId: "ammoniak", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "beruhigungsspritze",
+    name: "Beruhigungsspritze",
+    level: 7,
+    quality: false,
+    xpPerCraft: 70,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 30,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "anaesthetikum", amountPerCraft: 1 },
+      { itemId: "chloroform", amountPerCraft: 1 },
+      { itemId: "kochsalzloesung", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "prekursor",
+    name: "Prekursor",
+    level: 9,
+    quality: false,
+    xpPerCraft: 72,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 30,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "schwefelsaeure", amountPerCraft: 1 },
+      { itemId: "methanol", amountPerCraft: 1 },
+      { itemId: "natriumchlorid", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "erweitertes-med-kit",
+    name: "Erweitertes Med Kit",
+    level: 10,
+    quality: false,
+    xpPerCraft: 85,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 35,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "alkaloidextrakt", amountPerCraft: 1 },
+      { itemId: "adrenalin-spritze", amountPerCraft: 1 },
+      { itemId: "destilliertes-wasser", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "reiner-katalysator",
+    name: "Reiner Katalysator",
+    level: 12,
+    quality: false,
+    xpPerCraft: 100,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 40,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "salzsaeure", amountPerCraft: 1 },
+      { itemId: "aceton", amountPerCraft: 1 },
+      { itemId: "medizinische-base", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "rehydration-infusion",
+    name: "Rehydration Infusion",
+    level: 13,
+    quality: false,
+    xpPerCraft: 120,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 44,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "kochsalzloesung", amountPerCraft: 1 },
+      { itemId: "schmerzmittel", amountPerCraft: 1 },
+      { itemId: "destilliertes-wasser", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "wahrheitsserum",
+    name: "Wahrheitsserum",
+    level: 14,
+    quality: false,
+    xpPerCraft: 125,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 45,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "anaesthetikum", amountPerCraft: 1 },
+      { itemId: "prekursor", amountPerCraft: 1 },
+      { itemId: "chloroform", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "fentanylcitrat",
+    name: "Fentanylcitrat",
+    level: 15,
+    quality: false,
+    xpPerCraft: 130,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 46,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "prekursor", amountPerCraft: 1 },
+      { itemId: "pufferloesung", amountPerCraft: 1 },
+      { itemId: "destilliertes-wasser", amountPerCraft: 1 },
+    ],
+  },
+  {
+    id: "zyanid",
+    name: "Zyanid",
+    level: 18,
+    quality: false,
+    xpPerCraft: 180,
+    crafting: {
+      outputPerCraft: 3,
+      secondsPerProcess: 52,
+      craftsPerProcess: 5,
+    },
+    ingredients: [
+      { itemId: "kaliumcyanid", amountPerCraft: 1 },
+      { itemId: "reiner-katalysator", amountPerCraft: 1 },
+      { itemId: "ethanol", amountPerCraft: 1 },
+    ],
+  },
+];
+
+export const settings = {
+  currencySymbol: "$",
+  defaultSellPrice: "",
+};
