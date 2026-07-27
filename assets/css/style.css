@@ -334,6 +334,10 @@ tbody tr:hover {
   text-align: right;
 }
 
+.numeric-heading {
+  text-align: right;
+}
+
 .production-tree,
 .production-tree ul {
   list-style: none;

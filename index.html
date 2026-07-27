@@ -1,12 +1,15 @@
 <!doctype html>
 <html lang="de">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Statischer FiveM-Chemie-Rechner für Mengen, Herstellungsprozesse, Rohstoffe und Kosten.">
+  <meta name="description"
+    content="Statischer FiveM-Chemie-Rechner für Mengen, Herstellungsprozesse, Rohstoffe und Kosten.">
   <title>Chemie-Rechner</title>
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
   <header class="site-header">
     <div>
@@ -86,10 +89,22 @@
         </div>
 
         <dl class="finance-list">
-          <div><dt>Materialkosten</dt><dd id="materialCost">$0</dd></div>
-          <div><dt>Erlös</dt><dd id="revenue">—</dd></div>
-          <div><dt>Gewinn</dt><dd id="profit">—</dd></div>
-          <div><dt>Marge</dt><dd id="margin">—</dd></div>
+          <div>
+            <dt>Materialkosten</dt>
+            <dd id="materialCost">$0</dd>
+          </div>
+          <div>
+            <dt>Erlös</dt>
+            <dd id="revenue">—</dd>
+          </div>
+          <div>
+            <dt>Gewinn</dt>
+            <dd id="profit">—</dd>
+          </div>
+          <div>
+            <dt>Marge</dt>
+            <dd id="margin">—</dd>
+          </div>
         </dl>
       </section>
     </div>
@@ -101,7 +116,11 @@
       <div class="table-scroll">
         <table>
           <thead>
-            <tr><th>Zutat</th><th>Pro Herstellung</th><th>Gesamt</th></tr>
+            <tr>
+              <th>Zutat</th>
+              <th class="numeric-heading">Pro Herstellung</th>
+              <th class="numeric-heading">Gesamt</th>
+            </tr>
           </thead>
           <tbody id="directIngredientsTable"></tbody>
         </table>
@@ -112,11 +131,17 @@
       <div class="panel-heading">
         <h2 id="rawTitle">Rohstoffe und Materialkosten</h2>
       </div>
-      <p id="priceWarning" class="warning" hidden>Mindestens ein Rohstoff hat keinen eingetragenen Preis. Die Gesamtkosten sind daher unvollständig.</p>
+      <p id="priceWarning" class="warning" hidden>Mindestens ein Rohstoff hat keinen eingetragenen Preis. Die
+        Gesamtkosten sind daher unvollständig.</p>
       <div class="table-scroll">
         <table>
           <thead>
-            <tr><th>Rohstoff</th><th>Menge</th><th>Einzelpreis</th><th>Summe</th></tr>
+            <tr>
+              <th>Rohstoff</th>
+              <th class="numeric-heading">Menge</th>
+              <th class="numeric-heading">Einzelpreis</th>
+              <th class="numeric-heading">Summe</th>
+            </tr>
           </thead>
           <tbody id="rawMaterialsTable"></tbody>
         </table>
@@ -155,9 +180,10 @@
   </main>
 
   <footer>
-   <!-- Hier kannst du irgendwas reinschreiben Kai, ein icon oder so. --> 
+    <!-- Hier kannst du irgendwas reinschreiben Kai, ein icon oder so. -->
   </footer>
 
   <script type="module" src="./assets/js/app.js"></script>
 </body>
+
 </html>

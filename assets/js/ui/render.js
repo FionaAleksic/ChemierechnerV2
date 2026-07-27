@@ -123,7 +123,7 @@ export function renderResult(result, recipeIndex, rawMaterials, currencySymbol) 
     const subRecipe = recipeIndex.get(ingredient.itemId);
     const rawMaterial = rawMaterials[ingredient.itemId];
     appendCell(row, subRecipe?.name || rawMaterial?.name || ingredient.itemId);
-    appendCell(row, String(ingredient.amountPerCraft));
+    appendCell(row, String(ingredient.amountPerCraft), 'numeric');
     appendCell(row, String(ingredient.amountPerCraft * stage.craftCount), 'numeric');
     directIngredientsTable.appendChild(row);
   });
